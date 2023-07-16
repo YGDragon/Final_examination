@@ -11,7 +11,7 @@ public class Register {
             View.startMenuMessage();
             switch (Model.in.nextLine()) {
                 case "1" -> {
-                    List<String> animalsData = Model.readFromRegister();
+                    List<String> animalsData = Model.readFromRegister(Model.fileName);
                     View.definitionKindMessage();
                     View.seeSubKindMessage();
                     Animal animal = Model.definitionKind(
@@ -32,7 +32,6 @@ public class Register {
                     }
                     //
                     animalsData.add(animal.toString());
-                    System.out.println(animalsData);
                     Model.writeListToRegister(animalsData, Model.fileName);
                 }
                 case "2" -> {
@@ -40,11 +39,11 @@ public class Register {
                     View.printAllCommands(
                             Model.getAllCommands(
                                     Model.parseData(
-                                            Model.readFromRegister())));
+                                            Model.readFromRegister(Model.fileName))));
                 }
 
                 case "3" -> {
-                    List<HashMap<String, String>> animalsData = Model.parseData(Model.readFromRegister());
+                    List<HashMap<String, String>> animalsData = Model.parseData(Model.readFromRegister(Model.fileName));
                     View.idNumberMessage();
                     String findId = Model.in.nextLine();
                     View.newCommandMessage();
@@ -56,7 +55,7 @@ public class Register {
                 }
                 case "4" -> {
                     View.printRegisterData(
-                            Model.readFromRegister());
+                            Model.readFromRegister(Model.fileName));
                 }
                 case "5" -> {
                     stopLoop = true;

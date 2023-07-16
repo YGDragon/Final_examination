@@ -12,7 +12,7 @@ public class Model {
     /*
      * Получение списка данных о животных из реестра питомника
      */
-    public static List<String> readFromRegister() {
+    public static List<String> readFromRegister(String fileName) {
         List<String> registerData = new ArrayList<>();
         try (BufferedReader buffer = new BufferedReader(new FileReader(fileName))) {
             String readData;
@@ -20,7 +20,8 @@ public class Model {
                 registerData.add(readData);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("файла реестра отсутствует -> создан новый пустой файл реестра");
+            writeToFile("", fileName);
         }
         return registerData;
     }
@@ -145,9 +146,7 @@ public class Model {
                 buffer.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Файл отсутствует! ->\nДанные не были записаны\n".toUpperCase());
-            System.out.println("Создан новый файл ->\nПовторите ввод данных".toUpperCase());
-            new File(fileName);
+            System.out.println("ошибка записи файла".toUpperCase() + fileName);
         }
     }
 
@@ -156,12 +155,12 @@ public class Model {
      */
     public static void writeToFile(String data, String fileName) {
         try (BufferedWriter buffer = new BufferedWriter(new FileWriter(fileName))) {
-                buffer.write(data);
+            buffer.write(data);
+            if (data.length() != 0) {
                 buffer.newLine();
+            }
         } catch (IOException e) {
-            System.out.println("Файл отсутствует! ->\nДанные не были записаны\n".toUpperCase());
-            System.out.println("Создан новый файл ->\nПовторите ввод данных".toUpperCase());
-            new File(fileName);
+            System.out.println("ошибка записи файла".toUpperCase() + fileName);
         }
     }
 }
